@@ -67,6 +67,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         return dtoList;
     }
 
+    @Override
     public boolean deleteCustomer(String tel) throws SQLException{
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -77,6 +78,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public CustomerDto searchCustomer(String tel) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
