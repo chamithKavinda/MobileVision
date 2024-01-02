@@ -44,37 +44,16 @@ public class CustomerModel {
 
 
     public boolean deleteCustomer(String tel) throws SQLException{
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "DELETE FROM customer WHERE c_contact = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1,tel);
-
-        return pstm.executeUpdate()>0;
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        boolean isDelete = customerDAO.deleteCustomer(tel);
+        return isDelete;
     }
 
 
     public CustomerDto searchCustomer(String tel) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "SELECT * FROM customer WHERE c_contact = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1, tel);
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        CustomerDto dto = null;
-
-        if(resultSet.next()) {
-            String c_tel = resultSet.getString(1);
-            String c_name = resultSet.getString(2);
-            String c_address = resultSet.getString(3);
-            String c_id= resultSet.getString(4);
-
-            dto = new CustomerDto(c_tel, c_name, c_address, c_id);
-        }
-
-        return dto;
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        CustomerDto isSearch = customerDAO.searchCustomer(tel);
+        return isSearch;
     }
 
 

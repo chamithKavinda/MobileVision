@@ -12,4 +12,8 @@ public interface CustomerDAO {
 
      List<CustomerDto> getAllCustomers() throws SQLException;
 
+     boolean deleteCustomer(String tel) throws SQLException;
+
+     CustomerDto searchCustomer(String tel) throws SQLException;
+
 }
