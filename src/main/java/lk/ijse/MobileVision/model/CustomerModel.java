@@ -1,8 +1,10 @@
 package lk.ijse.MobileVision.model;
 
+import lk.ijse.MobileVision.dao.CustomerDAOImpl;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.RepairDto;
+import lk.ijse.MobileVision.dto.tm.CustomerTm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,55 +14,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerModel {
+
     public List<CustomerDto> getAllCustomers() throws SQLException{
-        Connection connection= DbConnection.getInstance().getConnection();
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        ArrayList<CustomerDto> allCustomer = (ArrayList<CustomerDto>) customerDAO.getAllCustomers();
 
-        String sql = "select * from customer";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        List<CustomerDto> dtoList= new ArrayList<>();
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        while (resultSet.next()){
-            String c_contact = resultSet.getString(1);
-            String c_name = resultSet.getString(2);
-            String c_address = resultSet.getString(3);
-            String c_id = resultSet.getString(4);
-
-            var dto = new CustomerDto(c_contact,c_name,c_address,c_id);
-            dtoList.add(dto);
+        for (CustomerDto dto : allCustomer){
+            new CustomerTm(
+                    dto.getTel(),
+                    dto.getName(),
+                    dto.getAddress(),
+                    dto.getId()
+            );
         }
-        return dtoList;
+        return allCustomer;
     }
 
     public boolean saveCustomer(final CustomerDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "INSERT INTO customer VALUES(?,?,?,?)";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1,dto.getTel());
-        pstm.setString(2,dto.getName());
-        pstm.setString(3,dto.getAddress());
-        pstm.setString(4,dto.getId());
-
-        boolean isSaved = pstm.executeUpdate()>0;
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        boolean isSaved = customerDAO.saveCustomer(new CustomerDto(dto.getTel(), dto.getName(), dto.getAddress(), dto.getId()));
         return isSaved;
     }
 
     public boolean updateCustomer(final CustomerDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "UPDATE customer set c_name = ?,c_address = ?, c_id = ? WHERE c_contact = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1,dto.getName());
-        pstm.setString(2,dto.getAddress());
-        pstm.setString(3, dto.getId());
-        pstm.setString(4, dto.getTel());
-
-        return pstm.executeUpdate()>0;
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        boolean isUpdate = customerDAO.updateCustomer(new CustomerDto(dto.getTel(), dto.getName(), dto.getAddress(), dto.getId()));
+        return isUpdate;
     }
 
 
