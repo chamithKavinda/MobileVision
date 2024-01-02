@@ -41,10 +41,10 @@ public class HomeForm {
     }
 
     @FXML
-    void btnSearchOnAction(ActionEvent event) {
+   private void btnSearchOnAction(ActionEvent event) throws SQLException {
         String code = txtSearchBar.getText();
 
-        try {
+       // try {
             System.out.println(code);
             ItemDto dto = ItemModel.searchItem(code);
 
@@ -56,10 +56,10 @@ public class HomeForm {
             txtPrice.setText(String.valueOf(dto.getUnitPrice()));
             txtQtyOnHand.setText(String.valueOf(dto.getQtyOnHand()));
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+     //   } catch (SQLException e) {
+         //   throw new RuntimeException(e);
         }
-    }
+   // }
 
 
     private void TimeNow(){
