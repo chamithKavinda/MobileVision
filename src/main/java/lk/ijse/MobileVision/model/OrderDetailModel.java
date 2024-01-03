@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class OrderDetailModel {
+
     public boolean saveOrderDetail(String o_id, List<CartTm> tmList) throws SQLException {
         for (CartTm cartTm : tmList) {
             if(!saveOrderDetail(o_id, cartTm)) {

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class OrderModel {
 
     public static boolean saveOrder(String o_id, String c_tel, LocalDate date) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+       Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "INSERT INTO orders VALUES(?, ?, ?)";
         PreparedStatement pstm = connection.prepareStatement(sql);
