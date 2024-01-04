@@ -84,7 +84,6 @@ public class RepairModel {
         }
         return dtoList;
     }
-
 /*
     public RepairDto searchRepair(String r_id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
