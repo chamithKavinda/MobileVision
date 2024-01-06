@@ -42,19 +42,15 @@ public class CustomerModel {
         return isUpdate;
     }
 
-
     public boolean deleteCustomer(String tel) throws SQLException{
         CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         boolean isDelete = customerDAO.deleteCustomer(tel);
         return isDelete;
     }
 
-
     public CustomerDto searchCustomer(String tel) throws SQLException {
         CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         CustomerDto isSearch = customerDAO.searchCustomer(tel);
         return isSearch;
     }
-
-
 }

@@ -1,8 +1,10 @@
 package lk.ijse.MobileVision.model;
 
+import lk.ijse.MobileVision.dao.RepairDAOImpl;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.RepairDto;
+import lk.ijse.MobileVision.dto.tm.RepairTm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,77 +15,40 @@ import java.util.List;
 
 public class RepairModel {
     public boolean deleteRepair(String id) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "DELETE FROM repair_details WHERE r_id = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1,id);
-
-        return pstm.executeUpdate()>0;
+        RepairDAOImpl repairDAO = new RepairDAOImpl();
+        boolean isDelete = repairDAO.deleteRepair(id);
+        return isDelete;
     }
 
     public boolean updateRepair(RepairDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "UPDATE repair_details set e_id = ?,r_description = ? ,r_price = ?,r_date = ?, c_contact = ?  WHERE r_id = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1,dto.getE_id());
-        pstm.setString(2,dto.getDescription());
-        pstm.setString(3, dto.getPrice());
-        pstm.setString(4, dto.getDate());
-        pstm.setString(5, dto.getC_tel());
-        pstm.setString(6, dto.getR_id());
-
-        return pstm.executeUpdate()>0;
+        RepairDAOImpl repairDAO = new RepairDAOImpl();
+        boolean isUpdate = repairDAO.updateRepair(new RepairDto(dto.getR_id(), dto.getE_id(), dto.getDescription(), dto.getPrice(), dto.getDate(), dto.getC_tel()));
+        return isUpdate;
     }
 
     public boolean saveRepair(RepairDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-
-        String sql = "INSERT INTO repair_details VALUES(?,?,?,?,?,?)";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-
-        pstm.setString(1,dto.getR_id());
-        pstm.setString(2,dto.getE_id());
-        pstm.setString(3, dto.getDescription());
-        pstm.setString(4, dto.getPrice());
-        pstm.setString(5, dto.getDate());
-        pstm.setString(6, dto.getC_tel());
-
-
-        boolean isSaved = pstm.executeUpdate()>0;
-
-        System.out.println(isSaved);
+        RepairDAOImpl repairDAO = new RepairDAOImpl();
+        boolean isSaved = repairDAO.saveRepair(new RepairDto(dto.getR_id(), dto.getE_id(), dto.getDescription(), dto.getPrice(), dto.getDate(), dto.getC_tel()));
         return isSaved;
-
     }
 
     public List<RepairDto> getAllRepair() throws SQLException {
-        Connection connection= DbConnection.getInstance().getConnection();
+        RepairDAOImpl repairDAO = new RepairDAOImpl();
+        ArrayList<RepairDto> allRepair = (ArrayList<RepairDto>) repairDAO.getAllRepair();
 
-        String sql = "select * from repair_details";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        List<RepairDto> dtoList= new ArrayList<>();
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        while (resultSet.next()){
-            String r_id = resultSet.getString(1);
-            String e_id = resultSet.getString(2);
-            String c_tel = resultSet.getString(3);
-            String description = resultSet.getString(4);
-            String price = resultSet.getString(5);
-            String date = resultSet.getString(6);
-
-            var dto = new RepairDto(r_id,e_id,c_tel,description,price,date);
-            dtoList.add(dto);
+        for(RepairDto dto : allRepair){
+            new RepairTm(
+                    dto.getR_id(),
+                    dto.getE_id(),
+                    dto.getC_tel(),
+                    dto.getDescription(),
+                    dto.getPrice(),
+                    dto.getDate()
+            );
         }
-        return dtoList;
+        return allRepair;
     }
+
 /*
     public RepairDto searchRepair(String r_id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
