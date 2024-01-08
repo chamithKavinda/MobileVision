@@ -1,6 +1,7 @@
 package lk.ijse.MobileVision.dao;
 
 import lk.ijse.MobileVision.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.MobileVision.dao.custom.impl.EmployeeDAOImpl;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -10,13 +11,15 @@ public class DAOFactory {
     }
 
     public enum DAOTypes{
-        CUSTOMER
+        CUSTOMER,EMPLOYEE
     }
 
     public SuperDAO getDAO(DAOTypes daoTypes){
         switch(daoTypes){
             case CUSTOMER:
                 new CustomerDAOImpl();
+            case EMPLOYEE:
+                new EmployeeDAOImpl();
             default:
                 return null;
         }

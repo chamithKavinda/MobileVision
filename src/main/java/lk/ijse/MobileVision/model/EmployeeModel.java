@@ -39,7 +39,6 @@ public class EmployeeModel {
             String e_address = resultSet.getString(3);
             String e_contact = resultSet.getString(4);
 
-
             var dto = new EmployeeDto(e_id,e_name,e_address,e_contact);
             dtoList.add(dto);
         }
