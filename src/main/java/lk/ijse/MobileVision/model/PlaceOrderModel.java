@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class PlaceOrderModel {
     private final OrderModel orderModel = new OrderModel();
     private final OrderDetailModel orderDetailModel = new OrderDetailModel();
-    
+
     public boolean placeOrder(PlaceOrderDto placeOrderDto) throws SQLException {
         boolean result = false;
         Connection connection = null;

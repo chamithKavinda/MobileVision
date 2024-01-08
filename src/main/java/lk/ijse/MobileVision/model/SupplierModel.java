@@ -1,10 +1,8 @@
 package lk.ijse.MobileVision.model;
 
-import lk.ijse.MobileVision.dao.SupplierDAOImpl;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.SupplierDto;
-import lk.ijse.MobileVision.dto.tm.SupplierTm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,41 +13,86 @@ import java.util.List;
 
 public class SupplierModel {
     public boolean deleteSupplier(String tel) throws SQLException {
-        SupplierDAOImpl supplierDAO = new SupplierDAOImpl();
-        boolean isDelete = supplierDAO.deleteSupplier(tel);
-        return isDelete;
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "DELETE FROM supplier WHERE sup_contact = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1,tel);
+
+        return pstm.executeUpdate()>0;
     }
 
     public boolean saveSupplier(SupplierDto dto) throws SQLException {
-        SupplierDAOImpl supplierDAO = new SupplierDAOImpl();
-        boolean isSaved = supplierDAO.saveSupplier(new SupplierDto(dto.getTel(),dto.getName(),dto.getAddress(),dto.getId()));
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "INSERT INTO supplier VALUES(?,?,?,?)";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1,dto.getTel());
+        pstm.setString(2,dto.getName());
+        pstm.setString(3,dto.getAddress());
+        pstm.setString(4,dto.getId());
+
+        boolean isSaved = pstm.executeUpdate()>0;
         return isSaved;
     }
 
     public SupplierDto searchSupplier(String tel) throws SQLException {
-        SupplierDAOImpl supplierDAO = new SupplierDAOImpl();
-        SupplierDto isSearch = supplierDAO.searchSupplier(tel);
-        return isSearch;
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "SELECT * FROM supplier WHERE sup_contact = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, tel);
+
+        ResultSet resultSet = pstm.executeQuery();
+
+        SupplierDto dto = null;
+
+        if(resultSet.next()) {
+            String sup_tel = resultSet.getString(1);
+            String sup_name = resultSet.getString(2);
+            String sup_address = resultSet.getString(3);
+            String sup_id = resultSet.getString(4);
+
+            dto = new SupplierDto(sup_tel,sup_name,sup_address,sup_id);
+        }
+
+        return dto;
     }
 
     public boolean updateSupplier(SupplierDto dto) throws SQLException {
-        SupplierDAOImpl supplierDAO = new SupplierDAOImpl();
-        boolean isUpdate = supplierDAO.updateSupplier(new SupplierDto(dto.getTel(),dto.getName(),dto.getAddress(),dto.getId()));
-        return isUpdate;
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "UPDATE supplier set sup_name = ?,sup_address = ?, sup_id = ? WHERE sup_contact = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1,dto.getName());
+        pstm.setString(2,dto.getAddress());
+        pstm.setString(3, dto.getId());
+        pstm.setString(4, dto.getTel());
+
+        return pstm.executeUpdate()>0;
     }
 
     public List<SupplierDto> getAllSupplier() throws SQLException {
-        SupplierDAOImpl supplierDAO = new SupplierDAOImpl();
-        ArrayList<SupplierDto> allSupplier = (ArrayList<SupplierDto>) supplierDAO.getAllSupplier();
+        Connection connection= DbConnection.getInstance().getConnection();
 
-        for(SupplierDto dto : allSupplier){
-            new SupplierTm(
-                    dto.getTel(),
-                    dto.getName(),
-                    dto.getAddress(),
-                    dto.getId()
-            );
+        String sql = "select * from supplier";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        List<SupplierDto> dtoList= new ArrayList<>();
+
+        ResultSet resultSet = pstm.executeQuery();
+
+        while (resultSet.next()){
+            String sup_contact = resultSet.getString(1);
+            String sup_name = resultSet.getString(2);
+            String sup_address= resultSet.getString(3);
+            String sup_id = resultSet.getString(4);
+
+            var dto = new SupplierDto(sup_contact,sup_name,sup_address,sup_id);
+            dtoList.add(dto);
         }
-        return allSupplier;
+        return dtoList;
     }
 }
