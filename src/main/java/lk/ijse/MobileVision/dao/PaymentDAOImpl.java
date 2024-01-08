@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentDAOImpl implements PaymentDAO{
+
+    @Override
     public boolean deletePayment(String p_id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -21,6 +23,7 @@ public class PaymentDAOImpl implements PaymentDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public boolean savePayment(PaymentDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -38,6 +41,7 @@ public class PaymentDAOImpl implements PaymentDAO{
         return isSaved;
     }
 
+    @Override
     public boolean updatePayment(PaymentDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -54,6 +58,7 @@ public class PaymentDAOImpl implements PaymentDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public List<PaymentDto> getAllPayment() throws SQLException {
         Connection connection= DbConnection.getInstance().getConnection();
 

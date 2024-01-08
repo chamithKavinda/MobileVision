@@ -7,13 +7,8 @@ import java.util.List;
 
 public interface CustomerDAO {
      boolean saveCustomer(final CustomerDto dto) throws SQLException ;
-
      boolean updateCustomer(final CustomerDto dto) throws SQLException;
-
      List<CustomerDto> getAllCustomers() throws SQLException;
-
      boolean deleteCustomer(String tel) throws SQLException;
-
      CustomerDto searchCustomer(String tel) throws SQLException;
-
 }

@@ -17,14 +17,14 @@ import java.util.List;
 
 public class EmployeeModel {
 
+    EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+
     public boolean deleteEmployee(String id) throws SQLException {
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
         boolean isDelete = employeeDAO.deleteEmployee(id);
         return isDelete;
     }
 
     public List<EmployeeDto> getAllEmployee() throws SQLException {
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
 
         ArrayList<EmployeeDto> allEmployee = (ArrayList<EmployeeDto>) employeeDAO.getAllEmployee();
 
@@ -40,19 +40,16 @@ public class EmployeeModel {
     }
 
     public boolean saveEmployee(final EmployeeDto dto) throws SQLException {
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
         boolean isSaved = employeeDAO.saveEmployee(new EmployeeDto(dto.getId(), dto.getName(), dto.getAddress(), dto.getTel()));
         return isSaved;
     }
 
     public boolean updateEmployee(final EmployeeDto dto) throws SQLException {
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
         boolean isUpdate = employeeDAO.updateEmployee(new EmployeeDto(dto.getId(), dto.getName(), dto.getAddress(), dto.getTel()));
         return isUpdate;
     }
 
     public CustomerDto searchCustomer(String id) throws SQLException {
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
         CustomerDto isSearch = employeeDAO.searchCustomer(id);
         return isSearch;
     }

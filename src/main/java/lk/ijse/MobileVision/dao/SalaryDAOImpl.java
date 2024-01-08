@@ -12,6 +12,7 @@ import java.util.List;
 
 public class SalaryDAOImpl implements SalaryDAO{
 
+    @Override
     public boolean deleteSalary(String s_id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -22,6 +23,7 @@ public class SalaryDAOImpl implements SalaryDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public boolean saveSalary(SalaryDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -37,6 +39,7 @@ public class SalaryDAOImpl implements SalaryDAO{
         return isSaved;
     }
 
+    @Override
     public boolean updateSalary(SalaryDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -51,6 +54,7 @@ public class SalaryDAOImpl implements SalaryDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public SalaryDto searchSalary(String s_id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -74,6 +78,7 @@ public class SalaryDAOImpl implements SalaryDAO{
         return dto;
     }
 
+    @Override
     public List<SalaryDto> getAllSalary() throws SQLException {
         Connection connection= DbConnection.getInstance().getConnection();
 

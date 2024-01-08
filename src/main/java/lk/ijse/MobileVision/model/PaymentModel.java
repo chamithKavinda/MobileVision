@@ -15,20 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentModel {
+
+    PaymentDAOImpl paymentDAO = new PaymentDAOImpl();
+
     public boolean deletePayment(String p_id) throws SQLException {
-        PaymentDAOImpl paymentDAO = new PaymentDAOImpl();
         boolean isDelete = paymentDAO.deletePayment(p_id);
         return isDelete;
     }
 
     public boolean savePayment(PaymentDto dto) throws SQLException {
-        PaymentDAOImpl paymentDAO = new PaymentDAOImpl();
         boolean isSaved = paymentDAO.savePayment(new PaymentDto(dto.getP_id(), dto.getC_tel(), dto.getO_id(), dto.getDate(), dto.getDescription(), dto.getAmount()));
         return isSaved;
     }
 
     public List<PaymentDto> getAllPayment() throws SQLException {
-        PaymentDAOImpl paymentDAO = new PaymentDAOImpl();
         ArrayList<PaymentDto> allPayment = (ArrayList<PaymentDto>) paymentDAO.getAllPayment();
 
         for(PaymentDto dto : allPayment){
@@ -45,7 +45,6 @@ public class PaymentModel {
     }
 
     public boolean updatePayment(PaymentDto dto) throws SQLException {
-        PaymentDAOImpl paymentDAO = new PaymentDAOImpl();
         boolean isUpdate = paymentDAO.updatePayment(new PaymentDto(dto.getP_id(), dto.getC_tel(), dto.getO_id(), dto.getDate(), dto.getDescription(), dto.getAmount()));
         return isUpdate;
     }

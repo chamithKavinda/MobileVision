@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepairDAOImpl implements RepairDAO{
+
+    @Override
     public boolean deleteRepair(String id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -21,6 +23,7 @@ public class RepairDAOImpl implements RepairDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public boolean updateRepair(RepairDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -37,6 +40,7 @@ public class RepairDAOImpl implements RepairDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public boolean saveRepair(RepairDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -60,6 +64,7 @@ public class RepairDAOImpl implements RepairDAO{
 
     }
 
+    @Override
     public List<RepairDto> getAllRepair() throws SQLException {
         Connection connection= DbConnection.getInstance().getConnection();
 

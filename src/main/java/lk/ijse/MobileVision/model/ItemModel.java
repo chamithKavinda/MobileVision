@@ -14,26 +14,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemModel {
+    ItemDAOImpl itemDAO = new ItemDAOImpl();
+
     public boolean deleteItem(String id) throws SQLException {
-        ItemDAOImpl itemDAO = new ItemDAOImpl();
         boolean isDelete = itemDAO.deleteItem(id);
         return isDelete;
     }
 
     public boolean saveItem(ItemDto dto) throws SQLException {
-        ItemDAOImpl itemDAO = new ItemDAOImpl();
         boolean isSaved = itemDAO.saveItem(new ItemDto(dto.getId(), dto.getDescription(), dto.getUnitPrice(), dto.getQtyOnHand()));
         return isSaved;
     }
 
     public boolean updateItem(final ItemDto dto) throws SQLException {
-       ItemDAOImpl itemDAO = new ItemDAOImpl();
        boolean isUpdate = itemDAO.updateItem(new ItemDto(dto.getId(), dto.getDescription(), dto.getUnitPrice(), dto.getQtyOnHand()));
        return isUpdate;
     }
 
     public List<ItemDto> getAllItems() throws SQLException {
-        ItemDAOImpl itemDAO = new ItemDAOImpl();
         ArrayList<ItemDto> allItem = (ArrayList<ItemDto>) itemDAO.getAllItems();
 
         for (ItemDto dto : allItem){

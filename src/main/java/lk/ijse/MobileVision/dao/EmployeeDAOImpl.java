@@ -13,6 +13,7 @@ import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO{
 
+    @Override
     public boolean saveEmployee(final EmployeeDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -28,6 +29,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         return isSaved;
     }
 
+    @Override
     public boolean deleteEmployee(String id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -38,6 +40,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public List<EmployeeDto> getAllEmployee() throws SQLException {
         Connection connection= DbConnection.getInstance().getConnection();
 
@@ -61,6 +64,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         return dtoList;
     }
 
+    @Override
     public boolean updateEmployee(final EmployeeDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -75,6 +79,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public CustomerDto searchCustomer(String id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 

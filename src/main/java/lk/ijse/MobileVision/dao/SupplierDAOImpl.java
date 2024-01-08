@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDAOImpl implements SupplierDAO{
+
+    @Override
     public boolean deleteSupplier(String tel) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -21,6 +23,7 @@ public class SupplierDAOImpl implements SupplierDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public boolean saveSupplier(SupplierDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -36,6 +39,7 @@ public class SupplierDAOImpl implements SupplierDAO{
         return isSaved;
     }
 
+    @Override
     public SupplierDto searchSupplier(String tel) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -59,7 +63,7 @@ public class SupplierDAOImpl implements SupplierDAO{
         return dto;
     }
 
-
+    @Override
     public boolean updateSupplier(SupplierDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -74,6 +78,7 @@ public class SupplierDAOImpl implements SupplierDAO{
         return pstm.executeUpdate()>0;
     }
 
+    @Override
     public List<SupplierDto> getAllSupplier() throws SQLException {
         Connection connection= DbConnection.getInstance().getConnection();
 

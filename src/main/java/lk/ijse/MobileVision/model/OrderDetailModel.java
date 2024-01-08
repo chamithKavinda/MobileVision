@@ -31,5 +31,4 @@ public class OrderDetailModel {
 
         return pstm.executeUpdate() > 0;
     }
-
 }
