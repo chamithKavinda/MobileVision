@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.MobileVision.bo.BOFactory;
 import lk.ijse.MobileVision.bo.custom.CustomerBO;
+import lk.ijse.MobileVision.bo.custom.PlaceOrderBO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.ItemDto;
@@ -23,7 +24,6 @@ import lk.ijse.MobileVision.dto.PlaceOrderDto;
 import lk.ijse.MobileVision.dto.tm.CartTm;
 import lk.ijse.MobileVision.model.ItemModel;
 import lk.ijse.MobileVision.model.OrderModel;
-import lk.ijse.MobileVision.model.PlaceOrderModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -105,8 +105,8 @@ public class PlaceOrderForm {
     private TextField txtUnitPrice;
 
     CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER_BO);
+    PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PLACE_ORDER_BO);
 
-    private final PlaceOrderModel placeOrderModel = new PlaceOrderModel();
 
     public void initialize() {
         setCellValueFactory();
@@ -279,7 +279,7 @@ public class PlaceOrderForm {
         );
 
         try {
-            boolean isSuccess = placeOrderModel.placeOrder(placeOrderDto);
+            boolean isSuccess = placeOrderBO.placeOrder(placeOrderDto);
             if(isSuccess) {
                 new Alert(Alert.AlertType.CONFIRMATION, "order completed!").show();
                 clearFields();
