@@ -14,12 +14,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.CustomerBO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.ItemDto;
 import lk.ijse.MobileVision.dto.PlaceOrderDto;
 import lk.ijse.MobileVision.dto.tm.CartTm;
-import lk.ijse.MobileVision.model.CustomerModel;
 import lk.ijse.MobileVision.model.ItemModel;
 import lk.ijse.MobileVision.model.OrderModel;
 import lk.ijse.MobileVision.model.PlaceOrderModel;
@@ -37,7 +38,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PlaceOrderForm {
-    private final CustomerModel customerModel = new CustomerModel();
+
     private final ItemModel itemModel = new ItemModel();
     private final OrderModel orderModel = new OrderModel();
     private final ObservableList<CartTm> obList = FXCollections.observableArrayList();
@@ -103,6 +104,8 @@ public class PlaceOrderForm {
     @FXML
     private TextField txtUnitPrice;
 
+    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER_BO);
+
     private final PlaceOrderModel placeOrderModel = new PlaceOrderModel();
 
     public void initialize() {
@@ -149,7 +152,7 @@ public class PlaceOrderForm {
     private void loadCustomerContacts() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<CustomerDto> cusList = customerModel.getAllCustomers();
+            List<CustomerDto> cusList = customerBO.getAllCustomers();
 
             for (CustomerDto dto : cusList) {
                 obList.add(dto.getTel());
@@ -301,7 +304,7 @@ public class PlaceOrderForm {
     @FXML
     void cmbCustomerContactOnAction(ActionEvent event) throws SQLException {
         String tel = cmbCustomerContact.getValue();
-        CustomerDto dto = customerModel.searchCustomer(tel);
+        CustomerDto dto = customerBO.searchCustomer(tel);
 
         txtCustomerName.setText(dto.getName());
     }

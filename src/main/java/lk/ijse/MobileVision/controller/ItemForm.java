@@ -10,10 +10,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.ItemDto;
 import lk.ijse.MobileVision.dto.tm.ItemTm;
-import lk.ijse.MobileVision.model.CustomerModel;
 import lk.ijse.MobileVision.model.ItemModel;
 
 import java.sql.SQLException;

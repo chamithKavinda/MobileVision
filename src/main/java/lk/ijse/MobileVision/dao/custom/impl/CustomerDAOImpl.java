@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
+
     @Override
     public List<Customer> getAll() throws SQLException{
+        System.out.println("test");
         ResultSet resultSet = SQLUtil.crudUtil("select * from customer");
         List<Customer> entityList= new ArrayList<>();
+        System.out.println("AA");
         while (resultSet.next()){
             String c_contact = resultSet.getString(1);
             String c_name = resultSet.getString(2);

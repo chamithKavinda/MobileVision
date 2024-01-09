@@ -13,9 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.CustomerBO;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.tm.CustomerTm;
-import lk.ijse.MobileVision.model.CustomerModel;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -54,6 +56,9 @@ public class CustomerForm {
     @FXML
     private TextField txtTel;
 
+
+    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER_BO);
+
     public void initialize() {
         setCellValueFactory();
         loadAllCustomer();
@@ -67,12 +72,10 @@ public class CustomerForm {
     }
 
     private void loadAllCustomer() {
-        var model = new CustomerModel();
-
         ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<CustomerDto> dtoList = model.getAllCustomers();
+            List<CustomerDto> dtoList = customerBO.getAllCustomers();
 
             for (CustomerDto dto : dtoList) {
                 obList.add(
@@ -94,15 +97,15 @@ public class CustomerForm {
     @FXML
     void btnClearOnAction(ActionEvent event) {
         clearFields();
+
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         String tel = txtTel.getText();
 
-        var customerModel = new CustomerModel();
         try {
-            boolean isDeleted = customerModel.deleteCustomer(tel);
+            boolean isDeleted = customerBO.deleteCustomer(tel);
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer deleted! ").show();
@@ -117,7 +120,7 @@ public class CustomerForm {
     void btnSaveOnAction(ActionEvent event) {
         boolean isCustomerValidated = validateCustomer();
         if (isCustomerValidated) {
-           // new Alert(Alert.AlertType.INFORMATION, "Customer Saved Successfully!").show();
+            // new Alert(Alert.AlertType.INFORMATION, "Customer Saved Successfully!").show();
 
         }
     }
@@ -154,9 +157,9 @@ public class CustomerForm {
 
         var dto = new CustomerDto(tel, name, address, id);
 
-        var model = new CustomerModel();
+
         try {
-            boolean isSaved = model.saveCustomer(dto);
+            boolean isSaved = customerBO.saveCustomer(dto);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Saved!").show();
                 loadAllCustomer();
@@ -173,9 +176,9 @@ public class CustomerForm {
     void txtSearchOnAction(ActionEvent event) {
         String tel = txtTel.getText();
 
-        var model = new CustomerModel();
+
         try {
-            CustomerDto dto = model.searchCustomer(tel);
+            CustomerDto dto = customerBO.searchCustomer(tel);
 
             if (dto != null) {
 
@@ -202,9 +205,9 @@ public class CustomerForm {
 
             var dto = new CustomerDto(tel, name, address, id);
 
-            var model = new CustomerModel();
+
             try {
-                boolean isUpdated = model.updateCustomer(dto);
+                boolean isUpdated = customerBO.updateCustomer(dto);
                 System.out.println(isUpdated);
                 if (isUpdated) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Customer Updated!").show();
@@ -264,3 +267,4 @@ public class CustomerForm {
     }
 
 }
+

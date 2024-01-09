@@ -10,21 +10,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.MobileVision.db.DbConnection;
-import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.PaymentDto;
 import lk.ijse.MobileVision.dto.tm.PaymentTm;
-import lk.ijse.MobileVision.model.CustomerModel;
 import lk.ijse.MobileVision.model.PaymentModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.swing.JRViewer;
-import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 

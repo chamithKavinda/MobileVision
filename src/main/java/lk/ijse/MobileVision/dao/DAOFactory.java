@@ -10,38 +10,33 @@ public class DAOFactory {
     }
 
     public enum DAOTypes{
-        CUSTOMER,EMPLOYEE,ITEM,ORDER_DETAIL,ORDER,PAYMENT,PLACE_ORDER,REPAIR,SALARY,SUPPLIER,USER
+        CUSTOMERS,EMPLOYEE,ITEM,ORDER_DETAIL,ORDER,PAYMENT,REPAIR,SALARY,SUPPLIER,USER
     }
 
     public SuperDAO getDAO(DAOTypes daoTypes){
         switch(daoTypes){
-            case CUSTOMER:
-                new CustomerDAOImpl();
+            case CUSTOMERS:
+                return  new CustomerDAOImpl();
             case EMPLOYEE:
-                new EmployeeDAOImpl();
+                return new EmployeeDAOImpl();
             case ITEM:
-                new ItemDAOImpl();
+               return new ItemDAOImpl();
             case ORDER_DETAIL:
-                new OrderDetailDAOImpl();
+               return new OrderDetailDAOImpl();
             case ORDER:
-                new OrderDetailDAOImpl();
+                return new OrderDetailDAOImpl();
             case PAYMENT:
-                new PaymentDAOImpl();
-            case PLACE_ORDER:
-                new PlaceOrderDAOImpl();
+                return new PaymentDAOImpl();
             case REPAIR:
-                new RepairDAOImpl();
+               return new RepairDAOImpl();
             case SALARY:
-                new SalaryDAOImpl();
+                return new SalaryDAOImpl();
             case SUPPLIER:
-                new SupplierDAOImpl();
+               return new SupplierDAOImpl();
             case USER:
-                new UserDAOImpl();
+               return new UserDAOImpl();
             default:
                 return null;
         }
     }
-
-
 }
-
