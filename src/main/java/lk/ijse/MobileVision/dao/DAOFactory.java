@@ -10,7 +10,7 @@ public class DAOFactory {
     }
 
     public enum DAOTypes{
-        CUSTOMER,EMPLOYEE,ITEM,ORDER_DETAIL,ORDER,PAYMENT,PLACE_ORDER,REPAIR
+        CUSTOMER,EMPLOYEE,ITEM,ORDER_DETAIL,ORDER,PAYMENT,PLACE_ORDER,REPAIR,SALARY
     }
 
     public SuperDAO getDAO(DAOTypes daoTypes){
@@ -31,6 +31,8 @@ public class DAOFactory {
                 new PlaceOrderDAOImpl();
             case REPAIR:
                 new RepairDAOImpl();
+            case SALARY:
+                new SalaryDAOImpl();
             default:
                 return null;
         }
