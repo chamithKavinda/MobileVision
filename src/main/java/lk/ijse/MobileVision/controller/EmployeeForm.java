@@ -11,6 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.EmployeeBO;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.EmployeeDto;
 import lk.ijse.MobileVision.dto.tm.EmployeeTm;
@@ -58,6 +60,8 @@ public class EmployeeForm {
     @FXML
     private TableView<EmployeeTm> tblEmployee;
 
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.EMPLOYEE_BO);
+
     public void initialize(){
         setCellValueFactory();
         loadAllEmployee();
@@ -71,12 +75,12 @@ public class EmployeeForm {
     }
 
     private void loadAllEmployee(){
-        var model = new EmployeeModel();
+
 
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try{
-            List<EmployeeDto> dtoList = model.getAllEmployee();
+            List<EmployeeDto> dtoList = employeeBO.getAllEmployee();
 
             for (EmployeeDto dto : dtoList){
                 obList.add(
@@ -104,9 +108,9 @@ public class EmployeeForm {
     void btnDeleteOnAction(ActionEvent event) {
         String id = txtId.getText();
 
-        var EmployeeModel = new EmployeeModel();
+
         try{
-            boolean isDeleted = EmployeeModel.deleteEmployee(id);
+            boolean isDeleted = employeeBO.deleteEmployee(id);
 
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION,"employee deleted! ").show();
@@ -155,9 +159,9 @@ public class EmployeeForm {
 
         var dto = new EmployeeDto(id,name,address,tel);
 
-        var model = new EmployeeModel();
+
         try{
-            boolean isSaved = model.saveEmployee(dto);
+            boolean isSaved = employeeBO.saveEmployee(dto);
             if(isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Employee Saved!").show();
                 loadAllEmployee();
@@ -174,9 +178,9 @@ public class EmployeeForm {
     void txtSearchOnAction(ActionEvent event) {
         String id = txtId.getText();
 
-        var model = new EmployeeModel();
+
         try {
-            CustomerDto dto = model.searchCustomer(id);
+            CustomerDto dto = employeeBO.searchCustomer(id);
 
             if(dto != null) {
                 fillFields(dto);
@@ -201,9 +205,9 @@ public class EmployeeForm {
 
             var dto = new EmployeeDto(id, name, address, tel);
 
-            var model = new EmployeeModel();
+
             try {
-                boolean isUpdated = model.updateEmployee(dto);
+                boolean isUpdated = employeeBO.updateEmployee(dto);
                 System.out.println(isUpdated);
                 if (isUpdated) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Employee Updated!").show();

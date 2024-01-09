@@ -16,7 +16,6 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public List<CustomerDto> getAllCustomers() throws SQLException {
-        System.out.println("hi");
         List<Customer> entityList = customerDAO.getAll();
 
         List<CustomerDto> dtoList = new ArrayList<>();
@@ -42,7 +41,8 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean updateCustomer(CustomerDto dto) throws SQLException {
-        return customerDAO.update(new Customer( dto.getTel(),
+        return customerDAO.update(new Customer(
+                dto.getTel(),
                 dto.getName(),
                 dto.getAddress(),
                 dto.getId()));
