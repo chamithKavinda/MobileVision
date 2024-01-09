@@ -16,13 +16,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.MobileVision.bo.BOFactory;
 import lk.ijse.MobileVision.bo.custom.CustomerBO;
+import lk.ijse.MobileVision.bo.custom.ItemBO;
 import lk.ijse.MobileVision.bo.custom.PlaceOrderBO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.ItemDto;
 import lk.ijse.MobileVision.dto.PlaceOrderDto;
 import lk.ijse.MobileVision.dto.tm.CartTm;
-import lk.ijse.MobileVision.model.ItemModel;
 import lk.ijse.MobileVision.model.OrderModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -39,7 +39,6 @@ import java.util.Optional;
 
 public class PlaceOrderForm {
 
-    private final ItemModel itemModel = new ItemModel();
     private final OrderModel orderModel = new OrderModel();
     private final ObservableList<CartTm> obList = FXCollections.observableArrayList();
 
@@ -106,7 +105,7 @@ public class PlaceOrderForm {
 
     CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER_BO);
     PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PLACE_ORDER_BO);
-
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.EMPLOYEE_BO);
 
     public void initialize() {
         setCellValueFactory();
@@ -137,7 +136,7 @@ public class PlaceOrderForm {
     private void loadItemCodes() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<ItemDto> itemList = itemModel.getAllItems();
+            List<ItemDto> itemList = itemBO.getAllItems();
 
             for (ItemDto itemDto : itemList) {
                 obList.add(itemDto.getId());
@@ -318,7 +317,7 @@ public class PlaceOrderForm {
         try {
 
             System.out.println(code);
-            ItemDto dto = itemModel.searchItem(code);
+            ItemDto dto = itemBO.searchItem(code);
 
             System.out.println(dto.getDescription());
             System.out.println(dto.getUnitPrice());

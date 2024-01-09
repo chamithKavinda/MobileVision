@@ -6,8 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.ItemBO;
 import lk.ijse.MobileVision.dto.ItemDto;
-import lk.ijse.MobileVision.model.ItemModel;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -35,6 +36,8 @@ public class HomeForm {
     @FXML
     private TextField txtSearchBar;
 
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.EMPLOYEE_BO);
+
     public void initialize() {
       TimeNow();
       Date();
@@ -46,7 +49,7 @@ public class HomeForm {
 
        // try {
             System.out.println(code);
-            ItemDto dto = ItemModel.searchItem(code);
+            ItemDto dto = itemBO.searchItem(code);
 
             System.out.println(dto.getDescription());
             System.out.println(dto.getUnitPrice());

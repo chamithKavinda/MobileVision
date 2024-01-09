@@ -16,7 +16,6 @@ import lk.ijse.MobileVision.bo.custom.EmployeeBO;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.EmployeeDto;
 import lk.ijse.MobileVision.dto.tm.EmployeeTm;
-import lk.ijse.MobileVision.model.EmployeeModel;
 
 import java.sql.SQLException;
 import java.util.List;

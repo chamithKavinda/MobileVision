@@ -2,6 +2,7 @@ package lk.ijse.MobileVision.bo;
 
 import lk.ijse.MobileVision.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.MobileVision.bo.custom.impl.EmployeeBOImpl;
+import lk.ijse.MobileVision.bo.custom.impl.ItemBOImpl;
 import lk.ijse.MobileVision.bo.custom.impl.PlaceOrderBOImpl;
 
 public class BOFactory {
@@ -13,7 +14,7 @@ public class BOFactory {
     }
 
     public enum BOTypes{
-        CUSTOMER_BO,PLACE_ORDER_BO,EMPLOYEE_BO
+        CUSTOMER_BO,PLACE_ORDER_BO,EMPLOYEE_BO,ITEM_BO
     }
 
     public SuperBO getBO(BOTypes boTypes){
@@ -24,6 +25,8 @@ public class BOFactory {
                 return new PlaceOrderBOImpl();
             case EMPLOYEE_BO:
                 return new EmployeeBOImpl();
+            case ITEM_BO:
+                return new ItemBOImpl();
             default:
                 return null;
         }

@@ -10,9 +10,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.ItemBO;
 import lk.ijse.MobileVision.dto.ItemDto;
 import lk.ijse.MobileVision.dto.tm.ItemTm;
-import lk.ijse.MobileVision.model.ItemModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -50,6 +51,7 @@ public class ItemForm {
     @FXML
     private TextField txtUnitPrice;
 
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.EMPLOYEE_BO);
 
     public void initialize(){
         setCellValueFactory();
@@ -64,12 +66,12 @@ public class ItemForm {
     }
 
     private void loadAllItem(){
-        var model = new ItemModel();
+
 
         ObservableList<ItemTm> obList = FXCollections.observableArrayList();
 
         try{
-            List<ItemDto> dtoList = model.getAllItems();
+            List<ItemDto> dtoList = itemBO.getAllItems();
 
             for(ItemDto dto : dtoList){
                 obList.add(
@@ -96,9 +98,9 @@ public class ItemForm {
     void btnDeleteOnAction(ActionEvent event) {
         String id = txtId.getText();
 
-        var itemModel = new ItemModel();
+
         try{
-            boolean isDeleted = itemModel.deleteItem(id);
+            boolean isDeleted = itemBO.deleteItem(id);
 
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION,"item deleted! ").show();
@@ -147,9 +149,9 @@ public class ItemForm {
 
         var dto = new ItemDto(id,description,unitPrice,qtyOnHand);
 
-        var model = new ItemModel();
+
         try{
-            boolean isSaved = model.saveItem(dto);
+            boolean isSaved = itemBO.saveItem(dto);
             if(isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"item Saved!").show();
                 loadAllItem();
@@ -175,9 +177,9 @@ public class ItemForm {
 
             var  dto = new ItemDto(id,description,unitPrice,qtyOnHand);
 
-            var model = new ItemModel();
+
             try{
-                boolean isUpdated = model.updateItem(dto);
+                boolean isUpdated = itemBO.updateItem(dto);
                 System.out.println(isUpdated);
                 if(isUpdated){
                     new Alert(Alert.AlertType.CONFIRMATION,"item Updated!").show();
@@ -225,10 +227,8 @@ public class ItemForm {
     @FXML
     void txtSearchOnAction(ActionEvent event) {
             String id = txtId.getText();
-
-            var model = new ItemModel();
             try{
-                ItemDto dto = model.searchItem(id);
+                ItemDto dto = itemBO.searchItem(id);
 
                 if(dto != null){
                     fillFields(dto);
