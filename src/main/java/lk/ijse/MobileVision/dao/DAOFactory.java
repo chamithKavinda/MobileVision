@@ -1,9 +1,6 @@
 package lk.ijse.MobileVision.dao;
 
-import lk.ijse.MobileVision.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.MobileVision.dao.custom.impl.EmployeeDAOImpl;
-import lk.ijse.MobileVision.dao.custom.impl.ItemDAOImpl;
-import lk.ijse.MobileVision.dao.custom.impl.OrderDetailDAOImpl;
+import lk.ijse.MobileVision.dao.custom.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -13,7 +10,7 @@ public class DAOFactory {
     }
 
     public enum DAOTypes{
-        CUSTOMER,EMPLOYEE,ITEM,ORDER_DETAIL
+        CUSTOMER,EMPLOYEE,ITEM,ORDER_DETAIL,ORDER,PAYMENT,PLACE_ORDER
     }
 
     public SuperDAO getDAO(DAOTypes daoTypes){
@@ -26,6 +23,12 @@ public class DAOFactory {
                 new ItemDAOImpl();
             case ORDER_DETAIL:
                 new OrderDetailDAOImpl();
+            case ORDER:
+                new OrderDetailDAOImpl();
+            case PAYMENT:
+                new PaymentDAOImpl();
+            case PLACE_ORDER:
+                new PlaceOrderDAOImpl();
             default:
                 return null;
         }
