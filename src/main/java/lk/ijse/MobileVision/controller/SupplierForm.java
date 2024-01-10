@@ -9,19 +9,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.SupplierBO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.SupplierDto;
 import lk.ijse.MobileVision.dto.tm.SupplierTm;
-import lk.ijse.MobileVision.model.SupplierModel;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
@@ -57,6 +54,8 @@ public class SupplierForm {
     @FXML
     private TextField txtTel;
 
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SUPPLIER_BO);
+
     public void initialize() {
         setCellValueFactory();
         loadAllSupplier();
@@ -70,12 +69,12 @@ public class SupplierForm {
     }
 
     private void loadAllSupplier() {
-        var model = new SupplierModel();
+
 
         ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SupplierDto> dtoList = model.getAllSupplier();
+            List<SupplierDto> dtoList = supplierBO.getAllSupplier();
 
             for (SupplierDto dto : dtoList) {
                 obList.add(
@@ -102,9 +101,9 @@ public class SupplierForm {
     void btnDeleteOnAction(ActionEvent event) {
         String tel = txtTel.getText();
 
-        var supplierModel = new SupplierModel();
+
         try {
-            boolean isDeleted = supplierModel.deleteSupplier(tel);
+            boolean isDeleted = supplierBO.deleteSupplier(tel);
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Supplier deleted! ").show();
@@ -155,9 +154,9 @@ public class SupplierForm {
 
         var dto = new SupplierDto(tel, name, address, id);
 
-        var model = new SupplierModel();
+
         try {
-            boolean isSaved = model.saveSupplier(dto);
+            boolean isSaved = supplierBO.saveSupplier(dto);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Supplier Saved!").show();
                 loadAllSupplier();
@@ -186,9 +185,9 @@ public class SupplierForm {
 
             var dto = new SupplierDto(tel, name, address, id);
 
-            var model = new SupplierModel();
+
             try {
-                boolean isUpdated = model.updateSupplier(dto);
+                boolean isUpdated = supplierBO.updateSupplier(dto);
                 System.out.println(isUpdated);
                 if (isUpdated) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Supplier Updated!").show();
@@ -236,9 +235,9 @@ public class SupplierForm {
     void txtSearchOnAction(ActionEvent event) {
         String tel = txtTel.getText();
 
-        var model = new SupplierModel();
+
         try {
-            SupplierDto dto = model.searchSupplier(tel);
+            SupplierDto dto = supplierBO.searchSupplier(tel);
 
             if (dto != null) {
 
