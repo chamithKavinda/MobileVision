@@ -10,10 +10,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.RepairBO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.RepairDto;
 import lk.ijse.MobileVision.dto.tm.RepairTm;
-import lk.ijse.MobileVision.model.RepairModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -68,6 +69,8 @@ public class RepairForm {
     @FXML
     private TextField txtRepairDescription;
 
+    RepairBO repairBO = (RepairBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.REPAIR_BO);
+
     public void initialize(){
         setCellValueFactory();
         loadAllRepair();
@@ -83,12 +86,12 @@ public class RepairForm {
     }
 
     private void loadAllRepair(){
-        var model = new RepairModel();
+
 
         ObservableList<RepairTm> obList = FXCollections.observableArrayList();
 
         try{
-            List<RepairDto> dtoList = model.getAllRepair();
+            List<RepairDto> dtoList = repairBO.getAllRepair();
 
             for (RepairDto dto : dtoList){
                 obList.add(
@@ -118,9 +121,9 @@ public class RepairForm {
     void btnDeleteOnAction(ActionEvent event) {
         String id = txtId.getText();
 
-        var repairModel = new RepairModel();
+
         try{
-            boolean isDeleted = repairModel.deleteRepair(id);
+            boolean isDeleted = repairBO.deleteRepair(id);
 
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION,"repair deleted! ").show();
@@ -185,9 +188,9 @@ public class RepairForm {
 
         var dto = new RepairDto(r_id,e_id,description,price,date,c_tel);
 
-        var model = new RepairModel();
+
         try{
-            boolean isSaved = model.saveRepair(dto);
+            boolean isSaved = repairBO.saveRepair(dto);
             if(isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Repair Saved!").show();
                 clearFields();
@@ -215,9 +218,9 @@ public class RepairForm {
 
             var dto = new RepairDto(r_id,e_id,description,price,date,c_tel);
 
-            var model = new RepairModel();
+
             try{
-                boolean isUpdated = model.updateRepair(dto);
+                boolean isUpdated = repairBO.updateRepair(dto);
                 System.out.println(isUpdated);
                 if(isUpdated){
                     new Alert(Alert.AlertType.CONFIRMATION,"Repair Updated!").show();
