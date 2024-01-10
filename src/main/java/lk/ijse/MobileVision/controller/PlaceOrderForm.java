@@ -104,7 +104,7 @@ public class PlaceOrderForm {
     OrderBO orderBO = (OrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ORDER_BO);
 
     private final ObservableList<CartTm> obList = FXCollections.observableArrayList();
-    
+
     public void initialize() {
         setCellValueFactory();
         generateNextOrderId();
