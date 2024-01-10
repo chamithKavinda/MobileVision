@@ -9,10 +9,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.PaymentBO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.PaymentDto;
 import lk.ijse.MobileVision.dto.tm.PaymentTm;
-import lk.ijse.MobileVision.model.PaymentModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -66,6 +67,8 @@ public class PaymentForm {
     @FXML
     private TextField txtPaymentId;
 
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PAYMENT_BO);
+
     public void initialize(){
         setCellValueFactory();
         loadAllPayment();
@@ -81,12 +84,12 @@ public class PaymentForm {
     }
 
     private void loadAllPayment() {
-        var model = new PaymentModel();
+
 
         ObservableList<PaymentTm> obList = FXCollections.observableArrayList();
 
         try{
-            List<PaymentDto> dtoList = model.getAllPayment();
+            List<PaymentDto> dtoList = paymentBO.getAllPayment();
 
             for (PaymentDto dto : dtoList){
                 obList.add(
@@ -116,9 +119,9 @@ public class PaymentForm {
     void btnDeleteOnAction(ActionEvent event) {
         String p_id = txtPaymentId.getText();
 
-        var paymentModel = new PaymentModel();
+
         try{
-            boolean isDeleted = paymentModel.deletePayment(p_id);
+            boolean isDeleted = paymentBO.deletePayment(p_id);
 
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION,"payment deleted! ").show();
@@ -141,9 +144,9 @@ public class PaymentForm {
 
         var dto = new PaymentDto(p_id,c_tel,o_id,date,description,amount);
 
-        var model = new PaymentModel();
+
         try{
-            boolean isSaved = model.savePayment(dto);
+            boolean isSaved = paymentBO.savePayment(dto);
             if(isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Payment Saved!").show();
                 clearFields();
@@ -168,9 +171,9 @@ public class PaymentForm {
 
         var dto = new PaymentDto(p_id,c_tel,o_id,date,description,amount);
 
-        var model = new PaymentModel();
+
         try{
-            boolean isUpdated = model.updatePayment(dto);
+            boolean isUpdated = paymentBO.updatePayment(dto);
             System.out.println(isUpdated);
             if(isUpdated){
                 new Alert(Alert.AlertType.CONFIRMATION,"Payment Updated!").show();
