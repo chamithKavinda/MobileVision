@@ -8,14 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.MobileVision.model.UserModel;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.UserBO;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 
 public class LoginForm {
 
@@ -28,13 +27,15 @@ public class LoginForm {
     @FXML
     private TextField txtUserName;
 
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER_BO);
+
     @FXML
     void btnLoginOnAction(ActionEvent event) throws IOException {
         String UserName = txtUserName.getText();
         String Password = txtPassword.getText();
 
         try{
-            boolean useIsExist = UserModel.isExistUser(UserName,Password);
+            boolean useIsExist = userBO.isExistUser(UserName,Password);
             if(useIsExist){
                 navigateToMainWindow();
             }else{

@@ -10,11 +10,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.UserBO;
 import lk.ijse.MobileVision.dto.UserDto;
-import lk.ijse.MobileVision.model.UserModel;
 
 import java.io.IOException;
-import java.security.cert.PolicyNode;
 import java.sql.SQLException;
 
 public class SignUpForm {
@@ -31,17 +31,19 @@ public class SignUpForm {
     @FXML
     private TextField txtUserName;
 
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER_BO);
+
     @FXML
     void btnSignUpOnAction(ActionEvent event) {
         try {
-            boolean userCheck = txtEmail.getText().equals(UserModel.getEmail(txtEmail.getText()));
+            boolean userCheck = txtEmail.getText().equals(userBO.getEmail(txtEmail.getText()));
             if (!userCheck) {
                 UserDto dto = new UserDto();
                 dto.setUserName(txtUserName.getText());
                 dto.setPassword(txtPassword.getText());
                 dto.setEmail(txtEmail.getText());
 
-                boolean isSaved = UserModel.saveUser(dto);
+                boolean isSaved = userBO.saveUser(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "User Saved").show();
                 } else {
