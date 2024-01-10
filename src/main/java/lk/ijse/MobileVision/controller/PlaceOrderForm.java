@@ -17,13 +17,13 @@ import javafx.stage.Stage;
 import lk.ijse.MobileVision.bo.BOFactory;
 import lk.ijse.MobileVision.bo.custom.CustomerBO;
 import lk.ijse.MobileVision.bo.custom.ItemBO;
+import lk.ijse.MobileVision.bo.custom.OrderBO;
 import lk.ijse.MobileVision.bo.custom.PlaceOrderBO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.ItemDto;
 import lk.ijse.MobileVision.dto.PlaceOrderDto;
 import lk.ijse.MobileVision.dto.tm.CartTm;
-import lk.ijse.MobileVision.model.OrderModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -38,11 +38,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class PlaceOrderForm {
-
-    private final OrderModel orderModel = new OrderModel();
-    private final ObservableList<CartTm> obList = FXCollections.observableArrayList();
-
-
     @FXML
     private JFXButton btnPlaceOrderOnAction;
 
@@ -106,7 +101,10 @@ public class PlaceOrderForm {
     CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER_BO);
     PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PLACE_ORDER_BO);
     ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.EMPLOYEE_BO);
+    OrderBO orderBO = (OrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ORDER_BO);
 
+    private final ObservableList<CartTm> obList = FXCollections.observableArrayList();
+    
     public void initialize() {
         setCellValueFactory();
         generateNextOrderId();
@@ -126,7 +124,7 @@ public class PlaceOrderForm {
 
     private void generateNextOrderId() {
         try {
-            String o_id = orderModel.generateNextOrderId();
+            String o_id = orderBO.generateNextOrderId();
             txtOrderId.setText(o_id);
         } catch (SQLException e) {
             throw new RuntimeException(e);

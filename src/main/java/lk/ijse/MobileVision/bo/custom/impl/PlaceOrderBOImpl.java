@@ -7,7 +7,6 @@ import lk.ijse.MobileVision.dao.custom.OrderDetailDAO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.PlaceOrderDto;
 import lk.ijse.MobileVision.entity.Order;
-import lk.ijse.MobileVision.model.OrderModel;
 
 import java.sql.Connection;
 import java.sql.SQLException;
