@@ -9,10 +9,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.MobileVision.bo.BOFactory;
+import lk.ijse.MobileVision.bo.custom.SalaryBO;
 import lk.ijse.MobileVision.db.DbConnection;
 import lk.ijse.MobileVision.dto.SalaryDto;
 import lk.ijse.MobileVision.dto.tm.SalaryTm;
-import lk.ijse.MobileVision.model.SalaryModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -52,6 +53,8 @@ public class SalaryForm {
     @FXML
     private TextField txtSalaryMonth1;
 
+    SalaryBO salaryBO = (SalaryBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SALARY_BO);
+
     public void initialize() {
         setCellValueFactory();
         loadAllSalary();
@@ -65,12 +68,12 @@ public class SalaryForm {
     }
 
     private void loadAllSalary() {
-        var model = new SalaryModel();
+
 
         ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SalaryDto> dtoList = model.getAllSalary();
+            List<SalaryDto> dtoList = salaryBO.getAllSalary();
 
             for (SalaryDto dto : dtoList) {
                 obList.add(
@@ -98,9 +101,9 @@ public class SalaryForm {
     void btnDeleteOnAction(ActionEvent event) {
         String s_id = txtSalaryId.getText();
 
-        var salaryModel = new SalaryModel();
+
         try{
-            boolean isDeleted = salaryModel.deleteSalary(s_id);
+            boolean isDeleted = salaryBO.deleteSalary(s_id);
 
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION,"salary deleted! ").show();
@@ -151,9 +154,9 @@ public class SalaryForm {
         }
         var dto = new SalaryDto(s_id,e_id,month,amount);
 
-        var model = new SalaryModel();
+
         try{
-            boolean isSaved = model.saveSalary(dto);
+            boolean isSaved = salaryBO.saveSalary(dto);
             if(isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Salary Saved!").show();
                 loadAllSalary();
@@ -179,9 +182,9 @@ public class SalaryForm {
 
             var  dto = new SalaryDto(s_id,e_id,month,amount);
 
-            var model = new SalaryModel();
+
             try{
-                boolean isUpdated = model.updateSalary(dto);
+                boolean isUpdated = salaryBO.updateSalary(dto);
                 System.out.println(isUpdated);
                 if(isUpdated){
                     new Alert(Alert.AlertType.CONFIRMATION,"Salary Updated!").show();
@@ -227,9 +230,9 @@ public class SalaryForm {
     void btnSearchOnAction(ActionEvent event) {
         String s_id = txtSalaryId.getText();
 
-        var model = new SalaryModel();
+
         try{
-            SalaryDto dto = model.searchSalary(s_id);
+            SalaryDto dto = salaryBO.searchSalary(s_id);
 
             if(dto != null){
                 fillFields(dto);
