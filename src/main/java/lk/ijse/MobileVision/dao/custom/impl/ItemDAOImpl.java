@@ -63,7 +63,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public Item search(String s) throws SQLException {
-        ResultSet resultSet = SQLUtil.crudUtil("select * from item where i_code =  ?");
+        ResultSet resultSet = SQLUtil.crudUtil("select * from item where i_code =  ?",s);
         Item entity = null;
 
         while(resultSet.next()){

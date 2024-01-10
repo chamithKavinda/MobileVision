@@ -27,6 +27,8 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public boolean isExistUser(String UserName, String Password) throws SQLException, ClassNotFoundException {
-        return userDAO.exist(UserName);
+        return userDAO.exist(UserName,Password);
     }
+
+
 }

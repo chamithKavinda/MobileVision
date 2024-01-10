@@ -50,10 +50,10 @@ public class RepairBOImpl implements RepairBO {
             dtoList.add(new RepairDto(
                     repair.getR_id(),
                     repair.getE_id(),
-                    repair.getC_tel(),
                     repair.getDescription(),
                     repair.getPrice(),
-                    repair.getDate()));
+                    repair.getDate(),
+                    repair.getC_tel()));
         }
         return dtoList;
     }

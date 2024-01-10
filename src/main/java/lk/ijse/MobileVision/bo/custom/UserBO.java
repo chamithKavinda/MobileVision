@@ -9,4 +9,6 @@ public interface UserBO extends SuperBO {
     boolean saveUser(UserDto dto) throws SQLException;
     String getEmail(String Email) throws SQLException , ClassNotFoundException;
     boolean isExistUser(String UserName,String Password) throws SQLException,ClassNotFoundException;
+
 }
+

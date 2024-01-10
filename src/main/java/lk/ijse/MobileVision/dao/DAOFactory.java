@@ -24,7 +24,7 @@ public class DAOFactory {
             case ORDER_DETAIL:
                return new OrderDetailDAOImpl();
             case ORDER:
-                return new OrderDetailDAOImpl();
+                return new OrderDAOImpl();
             case PAYMENT:
                 return new PaymentDAOImpl();
             case REPAIR:

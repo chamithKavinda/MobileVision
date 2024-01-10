@@ -47,10 +47,10 @@ public class EmployeeBOImpl implements EmployeeBO {
     @Override
     public boolean updateEmployee(EmployeeDto dto) throws SQLException {
         return employeeDAO.update(new Employee(
+                dto.getId(),
                 dto.getName(),
                 dto.getAddress(),
-                dto.getTel(),
-                dto.getId()));
+                dto.getTel()));
     }
 
     @Override

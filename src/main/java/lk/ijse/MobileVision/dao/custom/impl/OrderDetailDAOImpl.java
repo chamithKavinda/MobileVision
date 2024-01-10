@@ -16,11 +16,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 
     @Override
     public boolean save(OrderDetail orderDetail) throws SQLException {
-        return SQLUtil.crudUtil("INSERT INTO order_details VALUES(?, ?, ?, ?)",
-                orderDetail.getO_id(),
-                orderDetail.getI_code(),
-                orderDetail.getQty(),
-                orderDetail.getUnit_price());
+        return false;
     }
 
     @Override
@@ -48,12 +44,21 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
         return null;
     }
 
+    @Override
     public boolean saveOrderDetail(String o_id, List<CartTm> tmList) throws SQLException {
         for (CartTm cartTm : tmList) {
-            if(!saveOrderDetail(o_id, (List<CartTm>) cartTm)) {
+            if(!save(o_id,cartTm)) {
                 return false;
             }
         }
         return true;
     }
+
+    private boolean save(String o_id, CartTm cartTm) throws SQLException {
+        return SQLUtil.crudUtil("INSERT INTO order_details VALUES(?, ?, ?, ?)", o_id,cartTm.getCode(),cartTm.getQty(),cartTm.getUnitPrice());
+
+
+    }
+
+
 }

@@ -36,7 +36,7 @@ public class HomeForm {
     @FXML
     private TextField txtSearchBar;
 
-    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.EMPLOYEE_BO);
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ITEM_BO);
 
     public void initialize() {
       TimeNow();

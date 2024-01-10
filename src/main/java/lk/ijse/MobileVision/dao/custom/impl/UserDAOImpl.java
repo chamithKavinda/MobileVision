@@ -40,15 +40,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean exist(String id) throws SQLException {
-        ResultSet resultSet = SQLUtil.crudUtil("SELECT Password , UserName FROM user WHERE UserName=? and Password=?");
-        String dbUserName = null;
-        String dbPassword = null;
-        if(resultSet.next()){
-            dbPassword = resultSet.getString(1);
-            dbUserName = resultSet.getString(2);
-            // DbConnection.Email = resultSet.getString(3);
-        }
-        return UserName.equals(dbUserName) && Password.equals(dbPassword);
+       return false;
     }
 
     @Override
@@ -62,11 +54,24 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public  String getEmail(String Email) throws SQLException , ClassNotFoundException{
-        ResultSet resultSet = SQLUtil.crudUtil("SELECT Email FROM user WHERE Email=?");
+        ResultSet resultSet = SQLUtil.crudUtil("SELECT Email FROM user WHERE Email=?",Email);
 
         if(resultSet.next()){
             return resultSet.getString(1);
         }
         return null;
+    }
+
+    @Override
+    public boolean exist(String UserName, String Password) throws SQLException {
+        ResultSet resultSet = SQLUtil.crudUtil("SELECT Password , UserName FROM user WHERE UserName=? and Password=?",UserName,Password);
+        String dbUserName = null;
+        String dbPassword = null;
+        if(resultSet.next()){
+            dbPassword = resultSet.getString(1);
+            dbUserName = resultSet.getString(2);
+            // DbConnection.Email = resultSet.getString(3);
+        }
+        return UserName.equals(dbUserName) && Password.equals(dbPassword);
     }
 }
