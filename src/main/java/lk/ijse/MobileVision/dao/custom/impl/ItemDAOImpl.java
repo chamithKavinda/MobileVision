@@ -2,6 +2,7 @@ package lk.ijse.MobileVision.dao.custom.impl;
 
 import lk.ijse.MobileVision.dao.custom.ItemDAO;
 import lk.ijse.MobileVision.dto.ItemDto;
+import lk.ijse.MobileVision.dto.tm.CartTm;
 import lk.ijse.MobileVision.entity.Employee;
 import lk.ijse.MobileVision.entity.Item;
 import lk.ijse.MobileVision.util.SQLUtil;
@@ -44,6 +45,20 @@ public class ItemDAOImpl implements ItemDAO {
                 item.getUnitPrice(),
                 item.getQtyOnHand(),
                 item.getId());
+    }
+
+    public boolean update(List<CartTm> tm) throws SQLException {
+
+        for (CartTm cartTm : tm) {
+            if(!updateQty(cartTm)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean updateQty(CartTm cartTm) throws SQLException {
+        return SQLUtil.crudUtil("UPDATE item SET i_qty_on_hand = i_qty_on_hand - ? WHERE i_code = ?",cartTm.getQty(),cartTm.getCode());
     }
 
     @Override

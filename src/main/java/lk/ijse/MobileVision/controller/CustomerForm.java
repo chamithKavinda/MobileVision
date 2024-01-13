@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.MobileVision.bo.BOFactory;
 import lk.ijse.MobileVision.bo.custom.CustomerBO;
+import lk.ijse.MobileVision.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.MobileVision.dto.CustomerDto;
 import lk.ijse.MobileVision.dto.tm.CustomerTm;
 
@@ -56,8 +57,7 @@ public class CustomerForm {
     @FXML
     private TextField txtTel;
 
-
-    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER_BO);
+   CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER_BO);
 
     public void initialize() {
         setCellValueFactory();

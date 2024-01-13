@@ -12,5 +12,4 @@ public interface CrudDAO <T> extends SuperDAO {
     boolean exist(String id) throws SQLException;
     String generateId() throws SQLException ;
     T search(String s) throws SQLException;
-
 }

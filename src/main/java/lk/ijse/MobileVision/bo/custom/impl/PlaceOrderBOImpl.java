@@ -2,6 +2,7 @@ package lk.ijse.MobileVision.bo.custom.impl;
 
 import lk.ijse.MobileVision.bo.custom.PlaceOrderBO;
 import lk.ijse.MobileVision.dao.DAOFactory;
+import lk.ijse.MobileVision.dao.custom.ItemDAO;
 import lk.ijse.MobileVision.dao.custom.OrderDAO;
 import lk.ijse.MobileVision.dao.custom.OrderDetailDAO;
 import lk.ijse.MobileVision.db.DbConnection;
@@ -15,6 +16,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     OrderDAO orderDAO =(OrderDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER);
     OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER_DETAIL);
+    ItemDAO itemDAO = (ItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
 
     @Override
     public boolean placeOrder(PlaceOrderDto placeOrderDto) throws SQLException {
@@ -26,10 +28,15 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
             boolean isOrderSaved = orderDAO.save(new Order(placeOrderDto.getO_id(), placeOrderDto.getC_tel(), placeOrderDto.getDate()));
             if (isOrderSaved) {
-                boolean isOrderDetailSaved = orderDetailDAO.saveOrderDetail(placeOrderDto.getO_id(), placeOrderDto.getTmList());
-                if (isOrderDetailSaved) {
-                    connection.commit();
-                    result = true;
+
+                boolean isUpdated = itemDAO.update(placeOrderDto.getTmList());
+
+                if (isUpdated) {
+                    boolean isOrderDetailSaved = orderDetailDAO.saveOrderDetail(placeOrderDto.getO_id(), placeOrderDto.getTmList());
+                    if (isOrderDetailSaved) {
+                        connection.commit();
+                        result = true;
+                    }
                 }
             }
         } catch (SQLException e) {
