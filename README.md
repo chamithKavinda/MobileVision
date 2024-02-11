@@ -2,6 +2,8 @@
 
 This application implemented through Layared Architecture.
 
+![Screenshot 2024-02-11 103933](https://github.com/chamithKavinda/MobileVision/assets/139870167/1b9c0460-66d0-4542-aedd-e89e3230396a)
+
 This application handle a large amount of data about suppliers, stock , sales , employees , pre orders and inventory.
 This management system for suppliers , management system for sales, management system for employees , management system
 for Customers and also inventory management to digitalize process.
